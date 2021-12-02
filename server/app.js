@@ -1,14 +1,16 @@
 const express = require('express')
 const app = express()
 const { Sequelize } = require('sequelize');
-
-
+const router = require('./routes');
+const cors = require('cors');
+app.use(cors());
 app.listen(3000);
 
 app.get('/',function(req,res){
     res.status(200).send("SpringRangers");
 })
 
+app.use('/api', router.api);
 const sequelize = new Sequelize('burst', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql'
