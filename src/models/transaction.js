@@ -39,15 +39,15 @@ const Transaction = db.define('transaction', {
             type : Sequelize.DECIMAL(7,2),
             allowNull:true
         }, 
-        createdAt: {
+        created_at: {
             type: Sequelize.DATE(3),
             allowNull: true
         },
-        updatedAt: {
+        updated_at: {
             type: Sequelize.DATE(3),
             allowNull: true
         }
     }, {
-
+        timestamps: false,
     })
 module.exports=Transaction;

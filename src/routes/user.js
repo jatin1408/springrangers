@@ -11,11 +11,10 @@ router.post('/api/user/register',async (req, res) => {
     }
 })
 
-router.get('/api/user/login',async (req, res) => {
+router.post('/api/user/login',async (req, res) => {
     try {
-        console.log(req.body)
         const result = await userManager.login(req.body);
-        res.status(200).send({ message: "Success" });
+        res.status(200).send({ message: "Success", data: result });
     } catch(error){
         res.status(500).send({ message: error.message })
     }

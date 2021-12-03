@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const User = require('../models/user');
 
 const userType = {
     "SENDER": 0,
@@ -31,6 +32,16 @@ const generateRandomString = (length) => {
     }
 }
 
+const comparePassword = async (password, passwordHash) => {
+    try {
+        passwordHash = passwordHash.replace("$2y$", "$2a$");
+        const res = await bcrypt.compare(password, passwordHash);
+        return res;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 const register = async (options) => {
     try {
         const payload = {
@@ -43,7 +54,7 @@ const register = async (options) => {
             mobile_number: options.mobile_number,
             uuid: generateRandomString(6)
         }
-        console.log(payload)
+        const response = await User.create(payload);
         return {message: "User successfully created."}
     } catch (error) {
         throw new Error(error);
@@ -52,7 +63,24 @@ const register = async (options) => {
 
 const login = async (options) => {
     try {
+        const user = await User.findOne({ where: {email: options.email} });
+        if(!user) {
+            throw new Error({ message: "Invalid user" });
+        }
 
+        const isPasswordMatch = await comparePassword(options.password, user.dataValues.password_hash);
+        if (isPasswordMatch) {
+            const result = {
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                type: user.type && user.type == 0 ? "Sender": "Buyer",
+                uuid: user.uuid,
+                mobile_number: user.mobile_number
+            }
+            return result
+        }
+        return {}
     } catch (error) {
         throw new Error(error);
     }

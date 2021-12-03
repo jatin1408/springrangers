@@ -26,11 +26,11 @@ const Order = db.define('order',{
             allowNull: true
         },
 
-        createdAt: {
+        created_at: {
             type: Sequelize.DATE(3),
             allowNull: true
         },
-        updatedAt: {
+        updated_at: {
             type: Sequelize.DATE(3),
             allowNull: true
         },
@@ -44,7 +44,7 @@ const Order = db.define('order',{
         } 
     },
     {
-
+        timestamps: false,
 });
 
 module.exports=Order;
