@@ -1,4 +1,3 @@
-const { options } = require('../models/order');
 const Order = require('../models/order');
 const Payments = require('../models/payments');
 const Transaction = require('../models/transaction');
