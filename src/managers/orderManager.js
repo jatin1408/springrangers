@@ -1,19 +1,23 @@
 const Order = require('../models/order');
 const { query } = require('../utils/db');
+const User = require ('../models/user')
 
 const getAllOrders =  async (options) => {
     try {
         const query = {
             where : {
-                id : 1
-            }
+                sender_id : options.user_id
+            }, 
+            include : User
         }
         
         const result = await Order.findAll(query);
 
         return result
     } catch (error) {
-        throw new Error(error);
+        console.log ("Error", error)
+        return error
+        
     }
 }
 module.exports = {
