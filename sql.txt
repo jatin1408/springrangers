@@ -6,7 +6,7 @@ create table `users` (
 `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 `first_name` varchar(100) NOT NULL,
 `last_name` varchar(100) NOT NULL,
-`email` varchar(255) NOT NULL,
+`email` varchar(255) NOT NULL UNIQUE,
 `password_hash` varchar(255),
 `status` TINYINT default 1,
 `type` TINYINT default 0,
