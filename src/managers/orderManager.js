@@ -1,13 +1,15 @@
-const Orders = require('../models/order');
-const { query } = require('../utils/db');
+const Order = require('../models/order');
+
 const getAllOrders =  async (options) => {
     try {
-        query = {
-            where : {
-                user_id : 1
-            }
-        }
-        [error, result] = await Orders.findOne(query)
+        console.log ("Orders123" , Order)
+        // query = {
+        //     where : {
+        //         user_id : 1
+        //     }
+        // }
+        
+        const result = await Order.findAll();
 
         return result
     } catch (error) {

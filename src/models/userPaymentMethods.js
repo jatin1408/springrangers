@@ -16,11 +16,11 @@ const UserPaymentService = db.define('user_payment_methods',{
             allowNull:true,
             defaultValue:0
         },
-        createdAt: {
+        created_at: {
             type: Sequelize.DATE(3),
             allowNull: true
         },
-        updatedAt: {
+        updated_at: {
             type: Sequelize.DATE(3),
             allowNull: true
         }
