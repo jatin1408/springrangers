@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const { Sequelize } = require('sequelize');
+const sequelize = require("./utils/db");
 const router = require('./routes');
 const cors = require('cors');
 app.use(cors());
@@ -10,21 +10,12 @@ app.get('/',function(req,res){
     res.status(200).send("SpringRangers");
 })
 
+sequelize
+  .authenticate()
+  .then(() => console.log("Connected"))
+  .catch((err) => console.log("Error -> "  + err));
+
 app.use('/api', router.api);
-const sequelize = new Sequelize('burst', 'root', 'root', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
 
 
-async function testConnection()
-{
-    try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-      } catch (error) {
-        console.error('Unable to connect to the database:', error);
-      }
-}
 
-testConnection()
