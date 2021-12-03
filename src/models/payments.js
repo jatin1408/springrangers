@@ -1,6 +1,6 @@
 const db = require("../utils/db");
 const Sequelize = require('sequelize');
-const Payments = db.define('transaction', {
+const Payments = db.define('payments', {
         id: {
             type: Sequelize.INTEGER(11),
             allowNull: false,
