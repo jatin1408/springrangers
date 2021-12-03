@@ -15,4 +15,15 @@ router.get('/get-orders/:id',async (req,res) => {
     }
 })
 
+router.put('/update-order',async (req,res) => {
+    try {
+        const result = await orderManager.updateOrderStatus(req.body);
+        res.status(200).send(result)
+    }
+    catch(error){
+        res.send({ error: error, message : "Not able to updated order :( " } )
+    }
+})
+
+
 module.exports = router;

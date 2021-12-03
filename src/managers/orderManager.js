@@ -1,3 +1,4 @@
+const { options } = require('../models/order');
 const Order = require('../models/order');
 const Payments = require('../models/payments');
 const Transaction = require('../models/transaction');
@@ -20,6 +21,26 @@ const getAllOrders =  async (options) => {
         
     }
 }
+
+const updateOrderStatus  =  async (options) => {
+    try {
+        const query = {
+            where : {
+                id : options.order_id,
+                sender_id: options.user_id
+            }
+        }
+        const updated = {
+            status  : options.status
+        }
+        const result = await Order.update(updated, query)
+        return  { message : "Order updated!" }
+    }
+    catch (error){
+        return error
+    }
+}
 module.exports = {
-    getAllOrders
+    getAllOrders, 
+    updateOrderStatus
 }
