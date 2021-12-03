@@ -11,7 +11,7 @@ app.get('/',function(req,res){
 })
 
 app.use('/api', router.api);
-const sequelize = new Sequelize('burst', 'root', 'root', {
+const sequelize = new Sequelize('safepay', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql'
 });
