@@ -14,6 +14,8 @@ app.get('/',function(req,res){
 
 app.use(require('./src/routes/api'));
 app.use(require('./src/routes/user'));
+app.use(require('./src/routes/payment'));
+app.use(require('./src/routes/order'));
 
 sequelize
   .authenticate()

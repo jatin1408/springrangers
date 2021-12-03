@@ -1,4 +1,5 @@
-const db = require("../utils/sequelize");
+const db = require("../utils/db");
+const Sequelize = require('sequelize');
 const Users = db.define('users', {
         id: {
             type: Sequelize.INTEGER(11),

@@ -1,5 +1,7 @@
 const userManager = require('./userManager');
+const orderManager = require('./orderManager');
 
 module.exports = {
-    userManager: userManager
+    userManager: userManager,
+    orderManager: orderManager
 }
