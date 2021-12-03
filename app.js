@@ -30,6 +30,7 @@ sequelize
 Order.belongsTo(User,{foreignKey : "sender_id" , targetKey : "id"})
 Order.belongsTo(User,{foreignKey : "receiver_id" , targetKey : "id"})
 Order.belongsTo(Payments, {foreignKey : "payment_id" , targetKey : "id"})
+Order.belongsTo(Transaction, {foreignKey : "id" , targetKey : "order_id"})
 User.hasMany(UserPaymentMethods,  {foreignKey : "user_id" , targetKey : "id"})
 Transaction.belongsTo(Order, {foreignKey : "order_id" , targetKey: "id"})
 Transaction.belongsTo(Payments, {foreignKey : "payment_id" , targetKey: "id"})
