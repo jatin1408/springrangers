@@ -1,6 +1,4 @@
 const Order = require('../models/order');
-const Payments = require('../models/payments');
-const Transaction = require('../models/transaction');
 const User = require ('../models/user')
 
 const getAllOrders =  async (options) => {
@@ -9,7 +7,11 @@ const getAllOrders =  async (options) => {
             where : {
                 sender_id : options.user_id
             }, 
-            include : [User,Payments,Transaction]
+            include : [ {
+                model : User,
+                attributes : ["id","first_name","last_name" , "email", "status" , "type" ,"mobile_number" ,"uuid"]
+            }],
+            attributes: ['id', 'sender_id' , 'receiver_id' , 'status' , 'service' , 'payment_id', 'grand_total', 'created_at'], 
         }
         
         const result = await Order.findAll(query);
