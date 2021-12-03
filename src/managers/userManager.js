@@ -1,6 +1,8 @@
 const register = async (options) => {
     try {
-        
+        const payload = {
+            
+        }
     } catch (error) {
         throw new Error(error);
     }

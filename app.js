@@ -5,6 +5,9 @@ const cors = require('cors');
 app.use(cors());
 app.listen(3000);
 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
 app.get('/',function(req,res){
     res.status(200).send("SpringRangers");
 })
