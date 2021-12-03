@@ -26,5 +26,6 @@ const UserPaymentService = db.define('user_payment_methods',{
         }
     },{
         timestamps: false,
+        tableName : 'user_payment_methods'
     })
 module.exports=UserPaymentService;
