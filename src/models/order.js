@@ -25,15 +25,6 @@ const Order = db.define('order',{
         type : Sequelize.STRING,
         allowNull: true
     },
-
-    created_at: {
-        type: Sequelize.DATE(3),
-        allowNull: true
-    },
-    updated_at: {
-        type: Sequelize.DATE(3),
-        allowNull: true
-    },
     payment_id : { 
         type: Sequelize.INTEGER(11),
         allowNull:true
@@ -41,7 +32,17 @@ const Order = db.define('order',{
     grand_total : {
         type : Sequelize.DECIMAL,
         allowNull:true
-    }
+    },
+    created_at: {
+        type: Sequelize.DATE(3),
+        allowNull: true
+    },
+    updated_at: {
+        type: Sequelize.DATE(3),
+        allowNull: true
+    } }, {
+        timestamps: false,
+        tableName : 'order'
 });
 
 module.exports=Order;

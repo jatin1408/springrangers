@@ -48,6 +48,7 @@ const Transaction = db.define('transaction', {
             allowNull: true
         }
     }, {
-
+        timestamps: false,
+        tableName : 'transaction'
     })
 module.exports=Transaction;
