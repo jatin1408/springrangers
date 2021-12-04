@@ -1,10 +1,10 @@
 const { Sequelize } = require("sequelize");
 module.exports = new Sequelize(
   "safepay",
-  "root",
-  "root",
+  "sql6456336",
+  "FzNttLKCLl",
   {
-    host: "localhost",
+    host: "sql6.freemysqlhosting.net",
     dialect: "mysql",
   }
 );
