@@ -76,6 +76,9 @@ async function generate_payment_link(orderData){
 let session_url = "https://api.razorpay.com/v1/payment_links";
 let uname = razorpayConfig.RAZORPAY_KEY_ID;
 let pass = razorpayConfig.RAZORPAY_KEY_SECRET;
+console.log ("Unmae" , uname)
+console.log ("Pass" , pass)
+console.log ("Options" , options)
 let responseData = await axios.post(
   session_url, options, {
     auth: {

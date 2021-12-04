@@ -54,12 +54,17 @@ const createOrder = async (options) => {
             service : options.service,
             grand_total : options.grand_total
         }
+        console.log  (payLoadForOrder)
+        const order =  await Order.create(payLoadForOrder)
         const payLoadForRazorPay = {
-            referenece_id : uuidv5(),
-            amount : options.grand_total 
+            reference_id : uuidv5(),
+            amount : options.grand_total,
+            order_id : order.id,
+            to_id : options.sender_id,
+            from_id : options.user_id
         }
         const razorPayPaymentLink = await generate_payment_link(payLoadForRazorPay) 
-        const order =  await Order.create(payLoadForOrder)
+        
         return  { order : order, razorPayPaymentLink : razorPayPaymentLink,  message : "Order Created!" } 
     }   
     catch(error){
