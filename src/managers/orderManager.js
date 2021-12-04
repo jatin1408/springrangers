@@ -47,13 +47,19 @@ const updateOrderStatus  =  async (options) => {
 
 const createOrder = async (options) => {
     try {
+        const seller = await User.findOne({ where: { uuid: options.code }});
+        if(!seller) throw new Error("Seller doesn't exists");
+
+        if(options.user_id == seller.id) throw new Error("Invalid seller");
+
         const payLoadForOrder = {
             sender_id :  options.user_id,
-            receiver_id :  options.receiver_id,
+            receiver_id :  seller.id,
             status  : ORDER_PROCESSING,
             service : options.service,
             grand_total : options.grand_total
         }
+
         const payLoadForRazorPay = {
             referenece_id : uuidv5(),
             amount : options.grand_total 
@@ -63,8 +69,7 @@ const createOrder = async (options) => {
         return  { order : order, razorPayPaymentLink : razorPayPaymentLink,  message : "Order Created!" } 
     }   
     catch(error){
-        console.log ("Error->" , error)
-        return error
+        throw new Error(error);
     }
 }
 

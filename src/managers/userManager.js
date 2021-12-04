@@ -2,8 +2,8 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 const userType = {
-    "SENDER": 0,
-    "RECEIVER": 1
+    "BUYER": 0,
+    "SELLER": 1
 };
 
 const generatePasswordHash = (password) => {
@@ -74,9 +74,10 @@ const login = async (options) => {
                 first_name: user.first_name,
                 last_name: user.last_name,
                 email: user.email,
-                type: user.type && user.type == 0 ? "Sender": "Buyer",
+                type: user.type && user.type == 0 ? "Buyer": "Sender",
                 uuid: user.uuid,
-                mobile_number: user.mobile_number
+                mobile_number: user.mobile_number,
+                user_id: user.id
             }
             return result
         }
