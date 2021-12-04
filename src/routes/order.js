@@ -26,4 +26,15 @@ router.put('/update-order',async (req,res) => {
 })
 
 
+router.post('/create-order',async (req,res) => {
+    try {
+        const result = await orderManager.createOrder(req.body);
+        res.status(200).send(result)
+    }
+    catch(error){
+        res.send({ error: error, message : "Not able to create order :( " } )
+    }
+})
+
+
 module.exports = router;

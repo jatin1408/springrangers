@@ -109,3 +109,7 @@ let responseData = await axios.post(
     return null;
   }
 }
+
+module.exports = {
+  generate_payment_link
+}
