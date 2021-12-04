@@ -104,7 +104,7 @@ const createOrder = async (options) => {
         const payLoadForOrder = {
             sender_id :  options.user_id,
             receiver_id :  seller.id,
-            status  : CONSTANTS.ORDER_PROCESSING,
+            status  : Constants.ORDER_PROCESSING,
             service : options.service,
             grand_total : parseFloat(parseFloat(options.grand_total).toFixed(2))
         }
