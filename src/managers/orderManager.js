@@ -2,7 +2,7 @@ const Order = require('../models/order');
 const User = require ('../models/user');
 const uuidv5 = require('uuid/v4');
 const {generate_payment_link} = require ('./razorpay')
-const {ORDER_APPROVED,ORDER_REJECTED, ORDER_PROCESSING} = require('../constants')
+const {ORDER_APPROVED,ORDER_CREDITED, ORDER_PROCESSING} = require('../constants')
 const getAllOrders =  async (options) => {
     try {
         const query = {
@@ -111,8 +111,24 @@ const createOrder = async (options) => {
     }
 }
 
+const completeOrder = async (options) => {
+    try {
+        //call razorpay api to  make payout and create corresponsing transaction
+
+        const payLoadForOrder = {
+            status  : ORDER_CREDITED,
+        }
+        const order =  await Order.update(payLoadForOrder, {where : {"id":options.id}})
+        return  {  message : "Order Successfully completed!" } 
+    }   
+    catch(error){
+        throw new Error(error);
+    }
+}
+
 module.exports = {
     getAllOrders, 
     updateOrderStatus,
-    createOrder
+    createOrder,
+    completeOrder
 }

@@ -25,6 +25,15 @@ router.put('/update-order',async (req,res) => {
     }
 })
 
+router.put('/complete-order',async (req,res) => {
+    try {
+        const result = await orderManager.completeOrder(req.body);
+        res.status(200).send(result)
+    }
+    catch(error){
+        res.send({ error: error, message : "Not able to Complete order :( " } )
+    }
+})
 
 router.post('/create-order',async (req,res) => {
     try {
