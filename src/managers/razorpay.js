@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const axios = require("axios");
+const logIt = require("./../logger/logger");
 const Enum = require("enum");
 const Transactions = require('../models/transaction');
 const razorpayConfig = require("./../config/razorpay.config");
@@ -56,7 +57,7 @@ exports.validatePayment = async (req, res) => {
 
 async function generate_payment_link(orderData){
   const options = {
-    amount: orderData.amount,
+    amount: orderData.amount * 100,
     currency: "INR",
     accept_partial: false,
     expire_by: parseInt(Date.now() / 1000) + 120 * 60,
@@ -64,7 +65,7 @@ async function generate_payment_link(orderData){
     description: "Payment for Transaction ID " + orderData.order_id,
     customer: {
       name: "PaySafe",
-      contact: 9830049539,
+      contact: "9830049539",
       email: "agarwal.mohit4211@gmail.com",
     },
     notify: {
