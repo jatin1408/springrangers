@@ -17,7 +17,43 @@ const getAllOrders =  async (options) => {
         }
         
         const result = await Order.findAll(query);
-        return result
+        const response = [{
+            "id": 1,
+            "order_id": 1,
+            "status": "Processing",
+            "seller": {
+                "email": "madhvi.mittal@gmail.com",
+                "first_name": "Madhvi",
+                "last_name": "Mittal",
+                "unique_code": "3FeRdb"
+            },
+            "buyer": {
+                "email": "tony.kakkar@gmail.com",
+                "first_name": "Tony",
+                "last_name": "Kakkar",
+                "unique_code": "fsIeTQ"
+            },
+            "grand_total": 100
+        }, {
+            "id": 2,
+            "order_id": 2,
+            "status": "Completed",
+            "seller": {
+                "email": "madhvi.mittal@gmail.com",
+                "first_name": "Madhvi",
+                "last_name": "Mittal",
+                "unique_code": "3FeRdb"
+            },
+            "buyer": {
+                "email": "neha.kakkar@gmail.com",
+                "first_name": "Neha",
+                "last_name": "Kakkar",
+                "unique_code": "PwI2TQ"
+            },
+            "grand_total": 80
+        
+        }];
+        return response
     } catch (error) {
         console.log ("Error", error)
         return error
