@@ -11,7 +11,7 @@ router.get('/get-orders/:id',async (req,res) => {
         res.status(200).send(result)
     }
     catch(error){
-        res.send({ error: error, message : "Not able to fetch orders :( " } )
+        res.status(500).send({ error: error, message : "Not able to fetch orders :( " } )
     }
 })
 
@@ -21,7 +21,7 @@ router.put('/update-order',async (req,res) => {
         res.status(200).send(result)
     }
     catch(error){
-        res.send({ error: error, message : "Not able to updated order :( " } )
+        res.status(500).send({ error: error, message : "Not able to updated order :( " } )
     }
 })
 
@@ -31,7 +31,7 @@ router.put('/complete-order',async (req,res) => {
         res.status(200).send(result)
     }
     catch(error){
-        res.send({ error: error, message : "Not able to Complete order :( " } )
+        res.status(500).send({ error: error, message : "Not able to Complete order :( " } )
     }
 })
 
@@ -41,7 +41,7 @@ router.post('/create-order',async (req,res) => {
         res.status(200).send(result)
     }
     catch(error){
-        res.send({ error: error, message : "Not able to create order :( " } )
+        res.status(500).send({ error: error, message : "Not able to create order :( " } )
     }
 })
 
