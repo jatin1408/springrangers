@@ -8,7 +8,7 @@ const User = require('./src/models/user')
 const Payments = require('./src/models/payments')
 const UserPaymentMethods = require('./src/models/userPaymentMethods')
 app.use(cors());
-app.listen(3000);
+app.listen(process.env.PORT);
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
