@@ -7,6 +7,7 @@ const Transaction = require('./src/models/transaction')
 const User = require('./src/models/user')
 const Payments = require('./src/models/payments')
 const UserPaymentMethods = require('./src/models/userPaymentMethods')
+require('dotenv').config({path:__dirname+'/../.env'});
 app.use(cors());
 app.listen(process.env.PORT);
 

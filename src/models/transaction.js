@@ -16,9 +16,8 @@ const Transaction = db.define('transaction', {
             allowNull: true
         },
         status : {
-            type: Sequelize.ENUM,
-            values: ["PENDING", "FAILED", "COMPLETED", "CANCELLED"],
-            defaultValue: "PENDING",
+            type: Sequelize.INTEGER(11),
+            defaultValue: "0", //0,1,2,3
             allowNull: false
         },
 

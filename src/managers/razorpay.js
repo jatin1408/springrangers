@@ -22,7 +22,7 @@ function checkIfValid(secret, data, signature) {
 
 exports.validatePayment = async (req, res) => {
   // do a validation
-  logIt.logIt(
+  console.log(
     "INFO",
     "POST /payment/api/v1/razorpay/validate webhook for razrorpay event : " +
       req.body.event
@@ -35,28 +35,28 @@ exports.validatePayment = async (req, res) => {
     }});
     if (paymentData) {
       if (req.body.event === "payment_link.paid") {
-        logIt.logIt("INFO", "Updating Payment status as Completed");
-        paymentData.paymentStatus = PAYMENT_STATUS.COMPLETED.toString();
+        console.log("INFO", "Updating Payment status as Completed");
+        paymentData.paymentStatus = 1;
       } else if (req.body.event === "payment_link.cancelled") {
-        logIt.logIt("INFO", "Updating Payment status as Cancelled");
-        paymentData.paymentStatus = PAYMENT_STATUS.CANCELLED.toString();
+        console.log("INFO", "Updating Payment status as Cancelled");
+        paymentData.paymentStatus = 2;
       } else {
-        logIt.logIt("INFO", "Updating Payment status as Failed");
-        paymentData.paymentStatus = PAYMENT_STATUS.FAILED.toString();
+        console.log("INFO", "Updating Payment status as Failed");
+        paymentData.paymentStatus = 3;
       }
       await paymentData.save();
     }
     res.status(200).json({ status: "ok" });
   } else {
     // pass it
-    logIt.logIt("ERROR", "Signature is not valid");
+    console.log("ERROR", "Signature is not valid");
     res.json({ status: "failed" });
   }
 };
 
 async function generate_payment_link(orderData){
   const options = {
-    amount: orderData.amount,
+    amount: orderData.amount * 100,
     currency: "INR",
     accept_partial: false,
     expire_by: parseInt(Date.now() / 1000) + 120 * 60,
@@ -64,7 +64,7 @@ async function generate_payment_link(orderData){
     description: "Payment for Transaction ID " + orderData.order_id,
     customer: {
       name: "PaySafe",
-      contact: 9830049539,
+      contact: "9830049539",
       email: "agarwal.mohit4211@gmail.com",
     },
     notify: {
@@ -85,14 +85,14 @@ let responseData = await axios.post(
   });
   if(responseData && responseData.data && responseData.data.short_url)
   {
-    logIt.logIt(
+    console.log(
       "INFO",
       "Payment link generated with data " + JSON.stringify(responseData.data)
     );
     orderData.paymentLink = responseData.data.short_url;
     let paymentData = await Transactions.create(orderData);
     if (paymentData) {
-      logIt.logIt(
+      console.log(
         "INFO",
         "Creating payment for email: " +
           paymentData.email +
@@ -101,11 +101,15 @@ let responseData = await axios.post(
       );
       return responseData.data;
     } else {
-      logIt.logIt("ERROR", "Error in saving payment data" + paymentData);
+      console.log("ERROR", "Error in saving payment data" + paymentData);
       return null;
     }
   } else{
-    logIt.logIt("ERROR", "Error while generating payment link");
+    console.log("ERROR", "Error while generating payment link");
     return null;
   }
+}
+
+module.exports = {
+  generate_payment_link
 }
