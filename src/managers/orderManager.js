@@ -21,43 +21,45 @@ const getAllOrders =  async (options) => {
             "id": 1,
             "order_id": 1,
             "status": "Processing",
-            "seller": {
+            "service": "Hello",
+            "buyer": {
                 "email": "madhvi.mittal@gmail.com",
                 "first_name": "Madhvi",
                 "last_name": "Mittal",
                 "unique_code": "3FeRdb"
             },
-            "buyer": {
+            "seller": {
                 "email": "tony.kakkar@gmail.com",
                 "first_name": "Tony",
                 "last_name": "Kakkar",
                 "unique_code": "fsIeTQ"
             },
-            "grand_total": 100
+            "grand_total": 100,
+            "payment_status": "On hold"
         }, {
             "id": 2,
             "order_id": 2,
             "status": "Completed",
-            "seller": {
+            "service": "development",
+            "buyer": {
                 "email": "madhvi.mittal@gmail.com",
                 "first_name": "Madhvi",
                 "last_name": "Mittal",
                 "unique_code": "3FeRdb"
             },
-            "buyer": {
+            "seller": {
                 "email": "neha.kakkar@gmail.com",
                 "first_name": "Neha",
                 "last_name": "Kakkar",
                 "unique_code": "PwI2TQ"
             },
-            "grand_total": 80
+            "grand_total": 80,
+            "payment_status": "On hold"
         
         }];
         return response
     } catch (error) {
-        console.log ("Error", error)
-        return error
-        
+        throw new Error(error.message);
     }
 }
 
@@ -77,7 +79,7 @@ const updateOrderStatus  =  async (options) => {
         return  { message : "Order updated!" }
     }
     catch (error){
-        return error
+        throw new Error(error.message);
     }
 }
 
