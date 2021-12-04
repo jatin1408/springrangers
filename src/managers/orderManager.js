@@ -34,7 +34,7 @@ const updateOrderStatus  =  async (options) => {
         const updated = {
             status  : options.status
         }
-        //Call RazarPay Api
+        //Call RazarPay Api for payout where transfer from razorpay to xyz
         const result = await Order.update(updated, query)
         return  { message : "Order updated!" }
     }

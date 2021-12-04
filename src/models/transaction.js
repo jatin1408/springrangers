@@ -7,18 +7,19 @@ const Transaction = db.define('transaction', {
             primaryKey: true,
             autoIncrement: true
         },
+        reference_id : { 
+            type: Sequelize.STRING,
+            allowNull:true
+        },
         order_id: {
             type: Sequelize.INTEGER(11),
             allowNull: true
         },
-        payment_id: {
-            type: Sequelize.INTEGER(11),
-            allowNull: true
-        },
         status : {
-            type: Sequelize.INTEGER(4),
-            allowNull:true,
-            defaultValue:0
+            type: Sequelize.ENUM,
+            values: ["PENDING", "FAILED", "COMPLETED", "CANCELLED"],
+            defaultValue: "PENDING",
+            allowNull: false
         },
 
         from_id : {
@@ -30,8 +31,7 @@ const Transaction = db.define('transaction', {
             type : Sequelize.INTEGER(11),
             allowNull: true
         },
-        
-        charge_id : { 
+        payment_link : { 
             type: Sequelize.STRING,
             allowNull:true
         },
@@ -41,11 +41,13 @@ const Transaction = db.define('transaction', {
         }, 
         created_at: {
             type: Sequelize.DATE(3),
-            allowNull: true
+            allowNull: true,
+            defaultValue: Sequelize.fn('NOW')
         },
         updated_at: {
             type: Sequelize.DATE(3),
-            allowNull: true
+            allowNull: true,
+            defaultValue: Sequelize.fn('NOW')
         }
     }, {
         timestamps: false,

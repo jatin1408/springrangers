@@ -21,6 +21,7 @@ app.use(require('./src/routes/api'));
 app.use(require('./src/routes/user'));
 // app.use(require('./src/routes/payment'));
 app.use(require('./src/routes/order'));
+app.use(require('./src/routes/razorpay'));
 
 sequelize
   .authenticate()
