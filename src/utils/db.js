@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
 module.exports = new Sequelize(
-  "safepay",
+  "sql6456336",
   "sql6456336",
   "FzNttLKCLl",
   {
