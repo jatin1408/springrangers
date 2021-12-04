@@ -70,9 +70,7 @@ const getAllOrders =  async (options) => {
         // }];
         return result
     } catch (error) {
-        console.log ("Error", error)
-        return error
-        
+        throw new Error(error.message);
     }
 }
 
@@ -92,7 +90,7 @@ const updateOrderStatus  =  async (options) => {
         return  { message : "Order updated!" }
     }
     catch (error){
-        return error
+        throw new Error(error.message);
     }
 }
 
@@ -101,14 +99,14 @@ const createOrder = async (options) => {
         const seller = await User.findOne({ where: { uuid: options.code }});
         if(!seller) throw new Error("Seller doesn't exists");
 
-        if(options.user_id == seller.id) throw new Error("Invalid seller");
+        // if(options.user_id == seller.id) throw new Error("Invalid seller");
 
         const payLoadForOrder = {
             sender_id :  options.user_id,
             receiver_id :  seller.id,
             status  : CONSTANTS.ORDER_PROCESSING,
             service : options.service,
-            grand_total : options.grand_total
+            grand_total : parseFloat(parseFloat(options.grand_total).toFixed(2))
         }
 
         const payLoadForRazorPay = {

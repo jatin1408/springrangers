@@ -80,8 +80,9 @@ const login = async (options) => {
                 user_id: user.id
             }
             return result
+        } else {
+            throw new Error("Invalid password") 
         }
-        return {}
     } catch (error) {
         throw new Error(error);
     }
