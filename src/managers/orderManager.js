@@ -2,7 +2,7 @@ const Order = require('../models/order');
 const User = require ('../models/user');
 const uuidv5 = require('uuid/v4');
 const {generate_payment_link} = require ('./razorpay')
-const {ORDER_APPROVED,ORDER_CREDITED, ORDER_PROCESSING} = require('../constants')
+const Constants = require('../constants')
 const getAllOrders =  async (options) => {
     try {
         const query = {
@@ -11,49 +11,64 @@ const getAllOrders =  async (options) => {
             }, 
             include : [ {
                 model : User,
-                attributes : ["id","first_name","last_name" , "email", "status" , "type" ,"mobile_number" ,"uuid"]
-            }],
-            attributes: ['id', 'sender_id' , 'receiver_id' , 'status' , 'service' , 'payment_id', 'grand_total', 'created_at'], 
+                attributes : ["first_name","last_name" , "email", "uuid"],
+                as : "Seller"
+            },
+            {
+                model : User,
+                attributes : ["first_name","last_name" , "email", "uuid"],
+                as : "Receiver"
+            }
+        ],
+            attributes: ['id', 'sender_id' , 'receiver_id' , 'status' , 'service' , 'grand_total', 'created_at'], 
         }
         
         const result = await Order.findAll(query);
-        const response = [{
-            "id": 1,
-            "order_id": 1,
-            "status": "Processing",
-            "seller": {
-                "email": "madhvi.mittal@gmail.com",
-                "first_name": "Madhvi",
-                "last_name": "Mittal",
-                "unique_code": "3FeRdb"
-            },
-            "buyer": {
-                "email": "tony.kakkar@gmail.com",
-                "first_name": "Tony",
-                "last_name": "Kakkar",
-                "unique_code": "fsIeTQ"
-            },
-            "grand_total": 100
-        }, {
-            "id": 2,
-            "order_id": 2,
-            "status": "Completed",
-            "seller": {
-                "email": "madhvi.mittal@gmail.com",
-                "first_name": "Madhvi",
-                "last_name": "Mittal",
-                "unique_code": "3FeRdb"
-            },
-            "buyer": {
-                "email": "neha.kakkar@gmail.com",
-                "first_name": "Neha",
-                "last_name": "Kakkar",
-                "unique_code": "PwI2TQ"
-            },
-            "grand_total": 80
+        result.forEach((item) => {
+            for (const [key, value] of Object.entries(Constants)) {
+                if(value == item.status) {
+                    item.status=key;
+                    break
+                }
+            }
+        })
+              // const response = [{
+        //     "id": 1,
+        //     "order_id": 1,
+        //     "status": "Processing",
+        //     "seller": {
+        //         "email": "madhvi.mittal@gmail.com",
+        //         "first_name": "Madhvi",
+        //         "last_name": "Mittal",
+        //         "unique_code": "3FeRdb"
+        //     },
+        //     "buyer": {
+        //         "email": "tony.kakkar@gmail.com",
+        //         "first_name": "Tony",
+        //         "last_name": "Kakkar",
+        //         "unique_code": "fsIeTQ"
+        //     },
+        //     "grand_total": 100
+        // }, {
+        //     "id": 2,
+        //     "order_id": 2,
+        //     "status": "Completed",
+        //     "seller": {
+        //         "email": "madhvi.mittal@gmail.com",
+        //         "first_name": "Madhvi",
+        //         "last_name": "Mittal",
+        //         "unique_code": "3FeRdb"
+        //     },
+        //     "buyer": {
+        //         "email": "neha.kakkar@gmail.com",
+        //         "first_name": "Neha",
+        //         "last_name": "Kakkar",
+        //         "unique_code": "PwI2TQ"
+        //     },
+        //     "grand_total": 80
         
-        }];
-        return response
+        // }];
+        return result
     } catch (error) {
         console.log ("Error", error)
         return error
@@ -91,7 +106,7 @@ const createOrder = async (options) => {
         const payLoadForOrder = {
             sender_id :  options.user_id,
             receiver_id :  seller.id,
-            status  : ORDER_PROCESSING,
+            status  : CONSTANTS.ORDER_PROCESSING,
             service : options.service,
             grand_total : options.grand_total
         }
@@ -122,6 +137,13 @@ const completeOrder = async (options) => {
     catch(error){
         throw new Error(error);
     }
+}
+
+function getStatus (status)  {
+    for (const [key, value] of Object.entries(Constants)) {
+        if(value == status) return key
+    }
+    return  ""
 }
 
 module.exports = {

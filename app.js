@@ -9,7 +9,7 @@ const Payments = require('./src/models/payments')
 const UserPaymentMethods = require('./src/models/userPaymentMethods')
 require('dotenv').config({path:__dirname+'/../.env'});
 app.use(cors());
-app.listen(process.env.PORT);
+app.listen(3000);
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -29,8 +29,8 @@ sequelize
   .then(() => console.log("Connected"))
   .catch((err) => console.log("Error -> "  + err));
 
-Order.belongsTo(User,{foreignKey : "sender_id" , targetKey : "id"})
-Order.belongsTo(User,{foreignKey : "receiver_id" , targetKey : "id"})
+Order.belongsTo(User,{foreignKey : "sender_id" , targetKey : "id" , as : "Seller" })
+Order.belongsTo(User,{foreignKey : "receiver_id" , targetKey : "id", as : "Receiver" })
 Order.belongsTo(Payments, {foreignKey : "payment_id" , targetKey : "id"})
 Order.hasMany(Transaction, {foreignKey : "order_id" , sourceKey : "id"})
 User.hasMany(UserPaymentMethods,  {foreignKey : "user_id" , targetKey : "id"})
